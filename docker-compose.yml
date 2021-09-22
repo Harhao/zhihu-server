@@ -1,0 +1,7 @@
+version: "2.0.0-beta.1"
+services:
+    web:
+        build: .
+        ports:
+            - "3000:3000"
+        

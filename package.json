@@ -1,0 +1,70 @@
+{
+  "name": "zhihu-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "watch-server": "cross-env NODE_ENV=dev nodemon --exec ts-node app.ts",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "build-ts": "tsc",
+    "build": "rm -fr dist && npm run lint && npm run build-ts",
+    "serve": "cross-env NODE_ENV=prod pm2 start dist/app.js --no-daemon",
+    "stop": "pm2 status && pm2 stop all"
+  },
+  "author": "huahao",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
+    "koa-helmet": "^6.1.0",
+    "koa-json-error": "^3.1.2",
+    "koa-jwt": "^4.0.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^10.0.0",
+    "koa2-cors": "^2.0.6",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.10",
+    "nodemailer": "^6.6.1",
+    "qiniu": "7.3.2",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "8.3.5",
+    "@commitlint/config-conventional": "8.3.4",
+    "@types/jsonwebtoken": "^8.5.1",
+    "@types/koa": "^2.13.1",
+    "@types/koa-json-error": "^3.1.2",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.4.2",
+    "@types/koa2-cors": "^2.0.1",
+    "@types/nodemailer": "^6.4.2",
+    "@types/redis": "^2.8.29",
+    "@typescript-eslint/parser": "^4.24.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.26.0",
+    "husky": "4.2.5",
+    "lint-staged": "10.2.9",
+    "nodemon": "^2.0.7",
+    "pm2": "^4.5.6",
+    "prettier": "^2.3.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,.tsx}": [
+      "prettier --trailing-comma es5 --single-quote --write",
+      "eslint --ignore-path .eslintignore",
+      "git add "
+    ]
+  }
+}
